@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Native
 import { join } from 'path';
 
 // Packages
-import { BrowserWindow, app, ipcMain, IpcMainEvent, screen } from 'electron';
+import { BrowserWindow, app, ipcMain, IpcMainEvent, screen, shell } from 'electron';
 import urlparser from 'url';
 import isDev from 'electron-is-dev';
+import loudness from 'loudness';
 import createTaskbar from './neonwidgets/taskbar';
+import { getDirectoryList, getInstalledSoftwares, getShortcutsList } from './libs/directories';
+import { getMusicList } from './libs/musics';
+import { commandLineExec } from './libs/system';
 
 function createWindow() {
   const primaryDisplay = screen.getPrimaryDisplay();
@@ -66,6 +71,92 @@ function createWindow() {
   ipcMain.on('close', () => {
     window.close();
   });
+
+  ipcMain.on('trigger_taskbar', (__, arg) => {
+    if (arg) {
+      createTaskbar();
+    }
+  });
+
+  ipcMain.on('dirList', (__, arg) => {
+    getDirectoryList(arg)
+      .then((data) => {
+        // console.log(data)
+        window.webContents.send('dirList', data);
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  });
+
+  ipcMain.on('musicList', (__, arg) => {
+    getMusicList(arg)
+      .then((data) => {
+        // console.log(data)
+        window.webContents.send('musicList', data);
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  });
+
+  ipcMain.on('getFileIcon', (__, arg) => {
+    app
+      .getFileIcon(arg.filepath)
+      .then((value) => {
+        window.webContents.send('getFileIcon', { ...arg, icon: value.toDataURL() });
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  });
+
+  ipcMain.on('installedsoftwares', () => {
+    getInstalledSoftwares()
+      .then((data) => {
+        // console.log(data)
+        window.webContents.send('installedsoftwares', data);
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  });
+
+  ipcMain.on('getShortcuts', (__, arg) => {
+    getShortcutsList(arg)
+      .then((data) => {
+        // console.log(data)
+        window.webContents.send('getShortcuts', data);
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  });
+
+  ipcMain.on('executeCommand', (__, arg) => {
+    commandLineExec(arg, (result) => {
+      // console.log(result)
+      window.webContents.send('executeCommand', result);
+    });
+  });
+
+  ipcMain.on('openFile', (__, arg) => {
+    shell.openPath(arg);
+  });
+
+  ipcMain.on('systemvolume', async (__, arg) => {
+    if (arg === 'init') {
+      // const getvolume = audio.volume();
+      const getvolume = await loudness.getVolume();
+      // console.log(`from init ${getvolume}`)
+      window.webContents.send('systemvolume', getvolume);
+    } else {
+      // audio.volume(parseInt(arg, 10));
+      await loudness.setVolume(parseInt(arg, 10));
+      // console.log(typeof arg)
+      window.webContents.send('systemvolume', arg);
+    }
+  });
 }
 
 // This method will be called when Electron has finished
@@ -73,7 +164,6 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
-  createTaskbar();
 
   app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
@@ -93,7 +183,6 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and require them here.
 
 // listen the channel `message` and resend the received message to the renderer process
-ipcMain.on('message', (event: IpcMainEvent, message: any) => {
-  console.log(message);
+ipcMain.on('message', (event: IpcMainEvent) => {
   setTimeout(() => event.sender.send('message', 'hi from electron'), 500);
 });

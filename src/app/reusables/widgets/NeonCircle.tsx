@@ -57,7 +57,7 @@ function NeonCircle() {
       }}
       transition={{
         duration: 1,
-        delay: 0
+        delay: 1
       }}
       id="div_neon_interface_home"
     >

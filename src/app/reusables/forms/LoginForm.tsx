@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUserAuthentication, ReduxState } from '../../../redux/types/interfaces';
+import { ISystemCMD, IUserAuthentication, ReduxState } from '../../../redux/types/interfaces';
 import { SET_USER_AUTHENTICATION } from '../../../redux/types/types';
 import Buttonloader from '../loaders/ButtonLoader';
+import ipcTriggers from '../../libs/hooks/ipcTriggers';
 
 function LoginForm() {
   const userauthentication: IUserAuthentication = useSelector((state: ReduxState) => state.userauthentication);
+  const systemcmd: ISystemCMD[] = useSelector((state: ReduxState) => state.systemcmd);
   const dispatch = useDispatch();
 
   const [enableForm, setenableForm] = useState<boolean>(false);
   const [isLoggingIn, setisLoggingIn] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (userauthentication.isEnabled) {
-      setTimeout(() => {
-        setenableForm(true);
-      }, 2000);
-    }
-  }, [userauthentication]);
+  const { getInstalledSoftwares } = ipcTriggers();
 
-  const ConfirmLogin = () => {
-    if (userauthentication.isEnabled) {
-      setisLoggingIn(true);
-      setenableForm(false);
+  useEffect(() => {
+    const filterSystemCMD = systemcmd.filter((flt: ISystemCMD) => flt.status === 'success');
+    if (filterSystemCMD.length > 0) {
       setTimeout(() => {
         dispatch({
           type: SET_USER_AUTHENTICATION,
@@ -46,6 +41,26 @@ function LoginForm() {
           }
         });
       }, 4000);
+    }
+  }, [systemcmd]);
+
+  useEffect(() => {
+    if (userauthentication.isEnabled) {
+      setTimeout(() => {
+        setenableForm(true);
+      }, 2000);
+    }
+  }, [userauthentication]);
+
+  const InitIPCRequests = () => {
+    getInstalledSoftwares();
+  };
+
+  const ConfirmLogin = () => {
+    if (userauthentication.isEnabled) {
+      setisLoggingIn(true);
+      setenableForm(false);
+      InitIPCRequests();
     }
   };
 
