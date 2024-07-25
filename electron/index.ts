@@ -20,6 +20,7 @@ function createWindow() {
     width,
     height,
     //  change to false to use AppBar
+    type: 'desktop',
     skipTaskbar: !isDev,
     frame: false,
     show: true,
