@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable default-param-last */
 import {
   IBatteryStatusState,
@@ -43,6 +44,7 @@ export const setuserauthentication = (state: IUserAuthentication = UserAuthentic
 export const setsystemcmd = (state: ISystemCMD[] = [], action: ActionProp) => {
   switch (action.type) {
     case SET_SYSTEM_CMD:
+      state.length >= 100 ? state.shift() : state;
       return state.concat(action.payload.systemcmd);
     case SET_SYSTEM_CMD_DEFAULT:
       return action.payload.systemcmd;
@@ -101,6 +103,7 @@ export const setdevicehardwares = (state: IDeviceHardwaresState = DeviceHardware
 export const setcpuregisters = (state = [], action: ActionProp) => {
   switch (action.type) {
     case SET_CPU_REGISTERS:
+      state.length >= 20 ? state.shift() : state;
       return state.concat(action.payload.cpuregisters);
     default:
       return state;
@@ -110,6 +113,7 @@ export const setcpuregisters = (state = [], action: ActionProp) => {
 export const setmemoryregisters = (state = [], action: ActionProp) => {
   switch (action.type) {
     case SET_MEMORY_REGISTERS:
+      state.length >= 20 ? state.shift() : state;
       return state.concat(action.payload.memoryregisters);
     default:
       return state;

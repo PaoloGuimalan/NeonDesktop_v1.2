@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IUserAuthentication {
   isAuth: boolean | null;
   isEnabled: boolean;
@@ -38,4 +39,8 @@ export interface ReduxState {
   currentpath: string;
   datetime: IDateTime;
   shutdownmodal: boolean;
+  batterystatus: IBatteryStatusState;
+  directories: any[];
+  cpuregisters: any[];
+  memoryregisters: any[];
 }

@@ -39,6 +39,7 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
+    "@types/os-utils": "^0.0.4",
     "@vitejs/plugin-react": "^1.2.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",

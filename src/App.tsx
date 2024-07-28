@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { IUserAuthentication, ReduxState } from './redux/types/interfaces';
 import Home from './app/home/Home';
@@ -7,15 +7,53 @@ import Login from './app/auth/Login';
 import { initeffects } from './app/libs/sounds/sounds';
 import Portables from './app/portables/Portables';
 import ipcTriggers from './app/libs/hooks/ipcTriggers';
+import { SET_DATE_TIME } from './redux/types/types';
 
 function App() {
   // console.log(window.ipcRenderer);
   const userauthentication: IUserAuthentication = useSelector((state: ReduxState) => state.userauthentication);
+  const dispatch = useDispatch();
 
-  const { initInstalledSoftwares } = ipcTriggers();
+  const { initInstalledSoftwares, initBatteryPower, initDirList, initCPU } = ipcTriggers();
+
+  function showTime() {
+    const date = new Date();
+    // const months: string[] = [
+    //   'January',
+    //   'February',
+    //   'March',
+    //   'April',
+    //   'May',
+    //   'June',
+    //   'July',
+    //   'August',
+    //   'September',
+    //   'October',
+    //   'November',
+    //   'December'
+    // ];
+
+    const n = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+    const time = date.toLocaleTimeString();
+    // const dateinwords = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+
+    dispatch({
+      type: SET_DATE_TIME,
+      payload: {
+        datetime: {
+          time,
+          date: n
+        }
+      }
+    });
+  }
 
   const InitModules = async () => {
     await initInstalledSoftwares();
+    await initBatteryPower();
+    await initDirList();
+    await initCPU();
+    setInterval(showTime, 1000);
   };
 
   useEffect(() => {

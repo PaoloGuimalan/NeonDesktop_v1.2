@@ -7,6 +7,7 @@ import { BrowserWindow, app, ipcMain, IpcMainEvent, screen, shell } from 'electr
 import urlparser from 'url';
 import isDev from 'electron-is-dev';
 import loudness from 'loudness';
+import os from 'os-utils';
 import createTaskbar from './neonwidgets/taskbar';
 import { getDirectoryList, getInstalledSoftwares, getShortcutsList } from './libs/directories';
 import { getMusicList } from './libs/musics';
@@ -57,6 +58,19 @@ function createWindow() {
   }
   // Open the DevTools.
   // window.webContents.openDevTools();
+
+  setInterval(() => {
+    os.cpuUsage((v: any) => {
+      window.webContents.send('hardware', {
+        cpu: v * 100,
+        totalcpu: os.cpuCount(),
+        memory: os.freememPercentage() * 100,
+        totalmemory: os.totalmem() / 1024
+        // harddrive: os.harddrive(),
+        // processes: os.getProcesses()
+      });
+    });
+  }, 3000);
 
   // For AppBar
   ipcMain.on('minimize', () => {

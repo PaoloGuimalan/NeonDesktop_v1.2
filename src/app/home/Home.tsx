@@ -25,7 +25,7 @@ function Home() {
   return (
     <div
       id="div_main_bg"
-      className="w-full h-full bg-transparent flex flex-col items-center justify-center overflow-y-hidden"
+      className="absolute w-full h-full bg-transparent flex flex-col items-center justify-center overflow-hidden"
     >
       <Routes>
         <Route path="/*" element={<DefaultTab />} />
