@@ -23,6 +23,7 @@ import {
   SET_MEMORY_REGISTERS,
   SET_NEON_INTERFACE,
   SET_SHORTCUTS_LIST,
+  SET_SHUTDOWN_MODAL,
   SET_SYSTEM_BRIGHTNESS,
   SET_SYSTEM_CMD,
   SET_SYSTEM_CMD_DEFAULT,
@@ -168,6 +169,15 @@ export const setsystembrightness = (state = 0, action: ActionProp) => {
   switch (action.type) {
     case SET_SYSTEM_BRIGHTNESS:
       return action.payload.systembrightness;
+    default:
+      return state;
+  }
+};
+
+export const setshutdownmodal = (state = false, action: ActionProp) => {
+  switch (action.type) {
+    case SET_SHUTDOWN_MODAL:
+      return action.payload.shutdownmodal;
     default:
       return state;
   }

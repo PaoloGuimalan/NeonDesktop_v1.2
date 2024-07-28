@@ -219,6 +219,10 @@ const ipcTriggers = () => {
     });
   };
 
+  const openFile = (path: string) => {
+    window.ipcRenderer.send('openFile', path);
+  };
+
   return {
     initsystemvolume,
     initsystembrightness,
@@ -236,7 +240,8 @@ const ipcTriggers = () => {
     initInstalledSoftwares,
     initCommandLine,
     initShortcuts,
-    triggerTaskbar
+    triggerTaskbar,
+    openFile
   };
 };
 

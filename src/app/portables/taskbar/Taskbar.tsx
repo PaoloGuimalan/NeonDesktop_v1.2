@@ -10,6 +10,7 @@ import MapIcon from '@material-ui/icons/Map';
 import FolderIcon from '@material-ui/icons/Folder';
 import ChargingIcon from '@material-ui/icons/Power';
 import ChargedIcon from '@material-ui/icons/Check';
+import ipcTriggers from '../../libs/hooks/ipcTriggers';
 
 function Taskbar() {
   const [battery, setbattery] = useState({
@@ -21,6 +22,8 @@ function Taskbar() {
     date: '',
     dateintext: ''
   });
+
+  const { openFile } = ipcTriggers();
 
   const navigatorRepl: any = navigator;
 
@@ -48,10 +51,6 @@ function Taskbar() {
         });
       });
     });
-  };
-
-  const openFile = (path: string) => {
-    window.ipcRenderer.send('openFile', path);
   };
 
   const initMaps = () => {

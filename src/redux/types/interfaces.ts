@@ -37,4 +37,5 @@ export interface ReduxState {
   neoninterface: boolean;
   currentpath: string;
   datetime: IDateTime;
+  shutdownmodal: boolean;
 }

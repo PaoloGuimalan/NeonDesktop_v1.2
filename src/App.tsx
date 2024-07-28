@@ -70,7 +70,7 @@ function App() {
   }, [pathname]);
 
   return (
-    <div id="div_main_bg" className="flex flex-col h-screen">
+    <div id="div_main_bg" className="flex flex-col h-screen overflow-y-hidden">
       <Routes>
         <Route path="/" element={mainRenderer('base')} />
         <Route path="/home/*" element={mainRenderer('home')} />

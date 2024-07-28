@@ -25,9 +25,8 @@ export default function createTaskbar() {
     x: centralizeHorizontal,
     y: bottomize,
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-      contextIsolation: false
+      preload: join(__dirname, '../preload.js'),
+      nodeIntegration: true
     }
   };
   // Create the browser window.

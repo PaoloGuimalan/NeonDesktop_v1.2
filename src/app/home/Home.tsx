@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { turnon } from '../libs/sounds/sounds';
 import DefaultTab from './tabs/DefaultTab';
+import ShutdownModal from '../reusables/widgets/ShutdownModal';
 
 function Home() {
   useEffect(() => {
@@ -22,10 +23,14 @@ function Home() {
   }, []);
 
   return (
-    <div id="div_main_bg" className="w-full h-full bg-transparent flex flex-col items-center justify-center">
+    <div
+      id="div_main_bg"
+      className="w-full h-full bg-transparent flex flex-col items-center justify-center overflow-y-hidden"
+    >
       <Routes>
         <Route path="/*" element={<DefaultTab />} />
       </Routes>
+      <ShutdownModal />
     </div>
   );
 }

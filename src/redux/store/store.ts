@@ -11,6 +11,7 @@ import {
   setmemoryregisters,
   setneoninterface,
   setshortcutslist,
+  setshutdownmodal,
   setsystembrightness,
   setsystemcmd,
   setsystemvolume,
@@ -32,7 +33,8 @@ const combiner = combineReducers({
   shortcutslist: setshortcutslist,
   batterystatus: setbatterystatus,
   systemvolume: setsystemvolume,
-  systembrightness: setsystembrightness
+  systembrightness: setsystembrightness,
+  shutdownmodal: setshutdownmodal
 });
 
 const store = configureStore({

@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../../redux/types/interfaces';
+import { SET_SHUTDOWN_MODAL } from '../../../redux/types/types';
 
 function NeonCircle() {
   const neoninterface: boolean = useSelector((state: ReduxState) => state.neoninterface);
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   //   const setconfirmexitmodaltoggle = (bool) => {
   //     dispatch({ type: SET_CONFIRM_EXIT_MODAL_TOGGLE, confirmexitmodaltoggle: bool });
@@ -124,6 +125,7 @@ function NeonCircle() {
         id="p_label_neon_home"
         onClick={() => {
           //   confirmexitmodal();
+          dispatch({ type: SET_SHUTDOWN_MODAL, payload: { shutdownmodal: true } });
         }}
       >
         NEON
