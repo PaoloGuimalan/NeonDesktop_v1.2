@@ -12,7 +12,7 @@ function ShutdownModal() {
   return (
     <motion.div
       animate={{
-        bottom: shutdownmodal ? '70px' : '-1000px',
+        bottom: shutdownmodal ? '85px' : '-1000px',
         display: 'flex'
       }}
       transition={{

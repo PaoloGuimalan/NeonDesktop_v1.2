@@ -14,7 +14,16 @@ function App() {
   const userauthentication: IUserAuthentication = useSelector((state: ReduxState) => state.userauthentication);
   const dispatch = useDispatch();
 
-  const { initInstalledSoftwares, initBatteryPower, initDirList, initCPU } = ipcTriggers();
+  const {
+    initInstalledSoftwares,
+    initBatteryPower,
+    initDirList,
+    initCPU,
+    initCurrentPath,
+    initCommandLine,
+    initGetFileIcon,
+    initShortcuts
+  } = ipcTriggers();
 
   function showTime() {
     const date = new Date();
@@ -53,6 +62,10 @@ function App() {
     await initBatteryPower();
     await initDirList();
     await initCPU();
+    await initCurrentPath();
+    await initCommandLine();
+    await initGetFileIcon();
+    await initShortcuts();
     setInterval(showTime, 1000);
   };
 

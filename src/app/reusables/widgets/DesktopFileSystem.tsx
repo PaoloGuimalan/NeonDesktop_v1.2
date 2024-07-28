@@ -27,16 +27,16 @@ function DesktopFileSystem() {
   const goToPath = (path: string) => {
     const currentPath = currentDir;
     const newPath = currentPath.split('\\').length === 1 ? `${currentDir}${path}` : `${currentDir}\\${path}`;
-    dispatch({ type: SET_CURRENT_PATH, currentpath: newPath });
-    dispatch({ type: SET_SYSTEM_CMD, systemcmd: `Entered ${newPath}` });
+    dispatch({ type: SET_CURRENT_PATH, payload: { currentpath: newPath } });
+    dispatch({ type: SET_SYSTEM_CMD, payload: { systemcmd: `Entered ${newPath}` } });
     getData(newPath);
   };
 
   const goBackPath = () => {
     const currentPath = currentDir.split('\\');
     const finalNewPath = currentPath.length === 1 ? `${currentPath.join('')}\\` : currentPath.join('\\');
-    dispatch({ type: SET_CURRENT_PATH, currentpath: finalNewPath });
-    dispatch({ type: SET_SYSTEM_CMD, systemcmd: `Returned to ${finalNewPath}` });
+    dispatch({ type: SET_CURRENT_PATH, payload: { currentpath: finalNewPath } });
+    dispatch({ type: SET_SYSTEM_CMD, payload: { systemcmd: `Returned to ${finalNewPath}` } });
     if (currentPath.length > 1) {
       getData(finalNewPath);
     }

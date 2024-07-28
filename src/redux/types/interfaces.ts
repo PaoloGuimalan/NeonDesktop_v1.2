@@ -43,4 +43,8 @@ export interface ReduxState {
   directories: any[];
   cpuregisters: any[];
   memoryregisters: any[];
+  installedsoftwares: any[];
+  commandline: string[];
+  shortcutslist: any[];
+  circlemenutoggle: boolean;
 }
