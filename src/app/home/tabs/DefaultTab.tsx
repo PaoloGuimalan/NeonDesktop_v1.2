@@ -9,6 +9,8 @@ import InstalledSoftwares from '../../reusables/widgets/InstalledSoftwares';
 import WindowsCMD from '../../reusables/widgets/WindowsCMD';
 import Shortcuts from '../../reusables/widgets/Shortcuts';
 import CircleMenu from '../../reusables/widgets/CircleMenu';
+import VoiceInterface from '../../reusables/widgets/VoiceInterface';
+import ContextHolder from '../../reusables/widgets/ContextHolder';
 
 function DefaultTab() {
   const { triggerTaskbar, getData } = ipcTriggers();
@@ -30,6 +32,8 @@ function DefaultTab() {
       <HardwareMini />
       <InstalledSoftwares />
       <WindowsCMD />
+      <VoiceInterface />
+      <ContextHolder />
     </div>
   );
 }

@@ -32,6 +32,12 @@ export interface IBatteryStatusState {
   percentage: number;
 }
 
+export interface IContextConversation {
+  id: number;
+  content: string;
+  sender: string;
+}
+
 export interface ReduxState {
   userauthentication: IUserAuthentication;
   systemcmd: ISystemCMD[];
@@ -47,4 +53,7 @@ export interface ReduxState {
   commandline: string[];
   shortcutslist: any[];
   circlemenutoggle: boolean;
+  contextholder: boolean;
+  neonspeaking: boolean;
+  contextconversation: IContextConversation[];
 }

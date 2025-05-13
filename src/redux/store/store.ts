@@ -2,6 +2,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   setbatterystatus,
   setcommandline,
+  setcontextconversation,
+  setcontextholder,
   setcpuregisters,
   setcurrentpath,
   setdatetime,
@@ -10,6 +12,7 @@ import {
   setinstalledsoftwares,
   setmemoryregisters,
   setneoninterface,
+  setneonspeaking,
   setshortcutslist,
   setshutdownmodal,
   setsystembrightness,
@@ -34,7 +37,10 @@ const combiner = combineReducers({
   batterystatus: setbatterystatus,
   systemvolume: setsystemvolume,
   systembrightness: setsystembrightness,
-  shutdownmodal: setshutdownmodal
+  shutdownmodal: setshutdownmodal,
+  contextholder: setcontextholder,
+  neonspeaking: setneonspeaking,
+  contextconversation: setcontextconversation
 });
 
 const store = configureStore({

@@ -12,6 +12,8 @@ import { BatteryStatusState, DateTimeState, DeviceHardwaresState, UserAuthentica
 import {
   SET_BATTERY_STATUS,
   SET_COMMAND_LINE,
+  SET_CONTEXT_CONVERSATION,
+  SET_CONTEXT_HOLDER,
   SET_CPU_REGISTERS,
   SET_CURRENT_PATH,
   SET_DATE_TIME,
@@ -23,6 +25,7 @@ import {
   SET_INSTALLED_SOFTWARES,
   SET_MEMORY_REGISTERS,
   SET_NEON_INTERFACE,
+  SET_NEONSPEAKING,
   SET_SHORTCUTS_LIST,
   SET_SHUTDOWN_MODAL,
   SET_SYSTEM_BRIGHTNESS,
@@ -182,6 +185,33 @@ export const setshutdownmodal = (state = false, action: ActionProp) => {
   switch (action.type) {
     case SET_SHUTDOWN_MODAL:
       return action.payload.shutdownmodal;
+    default:
+      return state;
+  }
+};
+
+export const setcontextholder = (state = false, action: ActionProp) => {
+  switch (action.type) {
+    case SET_CONTEXT_HOLDER:
+      return action.payload.contextholder;
+    default:
+      return state;
+  }
+};
+
+export const setneonspeaking = (state = false, action: ActionProp) => {
+  switch (action.type) {
+    case SET_NEONSPEAKING:
+      return action.payload.neonspeaking;
+    default:
+      return state;
+  }
+};
+
+export const setcontextconversation = (state = [], action: ActionProp) => {
+  switch (action.type) {
+    case SET_CONTEXT_CONVERSATION:
+      return [...state, action.payload.contextconversation];
     default:
       return state;
   }

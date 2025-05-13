@@ -12,7 +12,7 @@ import { SET_COMMAND_LINE, SET_DEFAULT_COMMAND_LINE } from '../../../redux/types
 function WindowsCMD() {
   const neoninterface: boolean = useSelector((state: ReduxState) => state.neoninterface);
   const commandline = useSelector((state: ReduxState) => state.commandline);
-  //   const contextholder = useSelector((state: ReduxState) => state.contextholder);
+  const contextholder = useSelector((state: ReduxState) => state.contextholder);
   const dispatch = useDispatch();
 
   const cmdrref = useRef<HTMLDivElement | null>(null);
@@ -60,7 +60,7 @@ function WindowsCMD() {
   return (
     <motion.div
       animate={{
-        right: neoninterface ? '-15px' : '-1000px'
+        right: neoninterface ? (!contextholder ? '-15px' : '-1000px') : '-1000px'
       }}
       transition={{
         duration: 1,
